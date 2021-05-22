@@ -1,0 +1,1 @@
+function timer(){setTimeout(check,1e3*DELAY)}function check(){var a=window.location.pathname,b="";if(a.startsWith("/in/")&&(b=decodeURIComponent(a.replace("/in/","").split("/")[0]),b&&checked.indexOf(b)===-1)){checked.push(b);var c={username:b};chrome.runtime.sendMessage({options:"in",payload:c})}timer()}var timer,DELAY=2,checked=[];$(function(){check()});

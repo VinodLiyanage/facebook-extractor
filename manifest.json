@@ -1,0 +1,53 @@
+{
+    "name": "Facebook Extractor",
+    "version": "1.0.0",
+    "description": "This is a great tool for extracting user email and number from their facebook account.",
+    "manifest_version": 3,
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+        "default_icon": {                    
+            "16": "./assets/images/icon16.png",           
+            "24": "./assets/images/icon24.png",           
+            "32": "./assets/images/icon32.png",
+            "48": "./assets/images/icon48.png"           
+          },
+          "default_title": "Facebook Data Extractor",      
+          "default_popup": "popup.html"
+    },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "css":["/assets/css/bootstrap.min.css"],
+        "run_at": "document_idle",
+        "js": [
+          "./assets/js/pageObserver.js"
+        
+        ]
+      }
+    ],
+    
+      "permissions": [
+        "https://mbasic.facebook.com/",
+        "https://www.facebook.com/",
+        "identity",
+        "tabs",
+        "activeTab",
+        "scripting",
+        "storage"
+      ],
+      "host_permissions": ["https://mbasic.facebook.com/", "https://www.facebook.com/"],
+      "icons": {                    
+        "16": "./assets/images/icon16.png",           
+        "24": "./assets/images/icon24.png",           
+        "32": "./assets/images/icon32.png",
+        "48": "./assets/images/icon48.png"           
+      },
+      
+      "web_accessible_resources": [
+        {
+          "resources": [],
+          "matches": ["<all_urls>"]
+        }]
+    }
