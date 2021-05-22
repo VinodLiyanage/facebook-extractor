@@ -22,7 +22,7 @@
         "css":["/assets/css/bootstrap.min.css"],
         "run_at": "document_idle",
         "js": [
-          "./assets/js/pageObserver.js"
+          "./assets/js/contentScripts/pageObserver.js"
         
         ]
       }
