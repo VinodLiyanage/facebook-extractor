@@ -1,11 +1,11 @@
 class Scrapper {
   constructor(urlArray) {
     this.urlArray = urlArray;
-    this.profileDataArray  = []
-    this.tagsArray = []
+    this.profileDataArray = [];
+    this.tagsArray = [];
   }
-  
-  filterProfileTag() {
+
+  async filterProfileTag() {
     /**
      * ? this method filder out non user profile urls.
      * @returns {string[]} filteredUserUrl
@@ -16,6 +16,8 @@ class Scrapper {
       hashtag: true,
       photo: true,
       memories: true,
+      groups: true,
+      watch: true,
       "profile.php": true,
     };
 
@@ -47,50 +49,61 @@ class Scrapper {
           })
       )
     );
-    
-    chrome.storage.local.get(['prevTagObject'], ({prevTagObject}) => {
-        console.log('local storage', prevTagObject)
-        if(!Object.keys(prevTagObject || {}).length) {
-            console.log('prevTagObject not found!')
-            const newTagObject = {}
-            for(let key of profileTagArray) {
-                newTagObject[key] = true;
-            }
-            chrome.storage.local.set({prevTagObject:newTagObject})
-            console.log('profileTagArray', profileTagArray)
-            this.getProfileData(profileTagArray)
-        } else {
-            console.log('prevTagObject found!')
-            const cleanedTagsArray = []
-            for(let tag of profileTagArray) {
-                if(!prevTagObject[tag]) {
-                    cleanedTagsArray.push(tag)
-                    prevTagObject[tag] = true;
-                } 
-            }
-            chrome.storage.local.set({prevTagObject})
-            console.log('cleanTags', cleanedTagsArray)
-            if(cleanedTagsArray.length) {
-                this.getProfileData(cleanedTagsArray)
-            }
+
+    if (!profileTagArray.length) return;
+
+    chrome.storage.local.get(["prevTagObject"], async ({ prevTagObject }) => {
+      console.log("local storage", prevTagObject);
+      if (!Object.keys(prevTagObject || {}).length) {
+        console.log("prevTagObject not found!");
+        const newTagObject = {};
+        for (let key of profileTagArray) {
+          newTagObject[key] = true;
         }
-    })
+        await new Promise((resolve) => {
+          chrome.storage.local.set({ prevTagObject: newTagObject }, () => {
+            console.log("new tags saved in local storage 1");
+            resolve(true);
+          });
+        });
+        console.log("profileTagArray", profileTagArray);
+        this.getProfileData(profileTagArray);
+      } else {
+        console.log("prevTagObject found!");
+        const cleanedTagsArray = [];
+        for (let tag of profileTagArray) {
+          if (!prevTagObject[tag]) {
+            cleanedTagsArray.push(tag);
+            prevTagObject[tag] = true;
+            await new Promise((resolve) => {
+              chrome.storage.local.set({ prevTagObject }, () => {
+                console.log("new tags saved in local storage 2");
+                resolve(true);
+              });
+            });
+          }
+        }
+        console.log("cleanTags", cleanedTagsArray);
+        if (cleanedTagsArray.length) {
+          this.getProfileData(cleanedTagsArray);
+        }
+      }
+    });
   }
   getProfileData(profileTagArray) {
-      console.log('background Called!')
-      try {
-          chrome.runtime.sendMessage({profileTagArray}, (response) => {});
-      } catch (e) {
-          console.error(e)
-      }
+    console.log("background Called!");
+    try {
+      chrome.runtime.sendMessage({ profileTagArray }, (response) => {});
+    } catch (e) {
+      console.error(e);
+    }
   }
-  
 }
 
 class PageObserver {
   constructor(targetNode) {
     this.targetNode = targetNode;
-    this.config = { attributes: false, childList: true, subtree: false };
+    this.config = { attributes: false, childList: true, subtree: true };
     this.observer = new MutationObserver((m, o) => this.callback(m, o));
     console.log("im page Observer");
     this.observe();
@@ -102,38 +115,32 @@ class PageObserver {
   observe() {
     this.observer.observe(this.targetNode, this.config);
   }
-  validator(anchor) {
-    chrome.storage.local.get(['anchorCount'], ({anchorCount}) => {
-        const newCount = anchor ? anchor.length : 0;
-        if(!anchorCount) {
-            return true;
-          } else {
-              anchorCount = parseInt(anchorCount)
-              if(anchorCount !== anchor.length) {
-                  return true;
-              }
-          }
-         chrome.storage.local.set({anchorCount: newCount})
-         return false;
-    })
-  }
-  callback(mutationsList, observer) {
+
+  async callback(mutationsList, observer) {
     for (const mutation of mutationsList) {
-      if (mutation.type === "childList") {
-
-          const anchor = Array.from(document.querySelectorAll('a[href]'))
-          const scapper = new Scrapper(anchor)
-
-          const isValidate = this.validator()
-        
-      } 
+      // console.log("mutation", mutation);
+      if (mutation.type === "childList" && mutation.addedNodes.length) {
+        // console.log("page mutation occured!");
+        for (let node of mutation.addedNodes) {
+          if(node) {
+            const anchor = Array.from(new Set(node.querySelectorAll("a[href]")));
+            // console.log("anchors", anchor.length);
+            const scapper = new Scrapper(anchor);
+            if (anchor.length) {
+              await scapper.filterProfileTag();
+            }
+          }
+        }
+      }
     }
   }
 }
 
 (() => {
   const targetNode = document.body;
-
+  //!
+  chrome.storage.local.clear();
+  //!
   console.log("targetNode", targetNode);
   new PageObserver(targetNode);
 })();
