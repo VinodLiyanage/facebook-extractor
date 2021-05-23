@@ -60,10 +60,10 @@ async function saveInfo(emailArray, contactArray) {
     console.error("emailArray and Contact Array have zero length!");
     return;
   }
-  if(!Array.isArray(emailArray)) {
+  if (!Array.isArray(emailArray)) {
     emailArray = [];
   }
-  if(!Array.isArray(contactArray)) {
+  if (!Array.isArray(contactArray)) {
     contactArray = [];
   }
 
@@ -80,7 +80,7 @@ async function saveInfo(emailArray, contactArray) {
       newContactArray = [...contact, ...contactArray];
     }
     const newUserObject = { email: newEmailArray, contact: newContactArray };
-    
+
     setBadgeCount(Object.values(newUserObject).flat().length);
     chrome.storage.local.set(newUserObject, () => {
       console.log("email and contact saved succefully!");
@@ -89,10 +89,10 @@ async function saveInfo(emailArray, contactArray) {
 }
 
 chrome.runtime.onMessage.addListener(async ({ data }, sender, sendResponse) => {
-  clearStorage();
+  sendResponse({ status: true });
+  await clearStorage();
   const emailArray = getEmailLocal(data);
   const contactArray = getContactNumberLocal(data);
-  saveInfo(emailArray, contactArray);
+  await saveInfo(emailArray, contactArray);
+  return true; 
 });
-
-

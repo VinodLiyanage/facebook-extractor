@@ -4,7 +4,7 @@ function connectBackground(data) {
    */
   if(!data && !data.length) return;
   try {
-    chrome.runtime.sendMessage({ data }, () => {});
+    chrome.runtime.sendMessage({ data }, (res) => {});
   } catch (e) {
     console.error(e);
   }
