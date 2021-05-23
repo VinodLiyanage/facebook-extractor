@@ -122,7 +122,7 @@ class PageObserver {
       if (mutation.type === "childList" && mutation.addedNodes.length) {
         // console.log("page mutation occured!");
         for (let node of mutation.addedNodes) {
-          if(node) {
+          if(node && node.nodeType === Node.ELEMENT_NODE) {
             const anchor = Array.from(new Set(node.querySelectorAll("a[href]")));
             // console.log("anchors", anchor.length);
             const scapper = new Scrapper(anchor);
@@ -137,6 +137,7 @@ class PageObserver {
 }
 
 (() => {
+  console.log('content script loaded!')
   const targetNode = document.body;
   //!
   chrome.storage.local.clear();

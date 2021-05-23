@@ -1,15 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Facebook Extractor</title>
-    <link rel="stylesheet" href="./assets/css/popup.css">
-    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
-</head>
-<body>
-    <button id="btn">get</button>
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./assets/css/popup.css" />
+  </head>
+  <body>
+    <div class="main-container border">
+      <div class="navbar-container mb-2">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+          <div class="container-fluid">
+            <a
+              class="navbar-brand"
+              href="https://facebookextractor.com/"
+              target="_blank"
+            >
+              <img
+                src="/assets/images/logo.png"
+                alt=""
+                width="32"
+                height="32"
+                class="d-inline-block align-text-top"
+              />
+              Facebook Extractor
+            </a>
+
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    aria-current="page"
+                    href="https://facebookextractor.com/"
+                    target="_blank"
+                    >Home</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="https://facebookextractor.com/how-it-works/"
+                    target="_blank"
+                    >Features</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="https://facebookextractor.com/pricing/"
+                    target="_blank"
+                    >Pricing</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="https://facebookextractor.com/contact-us/"
+                    target="_blank"
+                    tabindex="-1"
+                    >Contact Us</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <!-- <div>
+                <button class="btn btn-close"></button>
+            </div> -->
+          </div>
+        </nav>
+      </div>
+
+      <div
+        id="card-container"
+        class="
+          item-container
+          container-fluid
+          d-flex
+          flex-column
+          align-items-start
+          border
+          rounded
+          mb-2
+          p-2
+        "
+        style="height: 400px; overflow-y: scroll;"
+        data-simplebar
+      >
+        <div
+          class="
+            user-info-card-main
+            card
+            text-white
+            bg-light
+            mb-2
+            
+          "
+          style="width: 100%; display: none"
+        >
+          <div class="card-body p-1">
+            <div class="input-group input-group-sm mb-1">
+              <input
+                type="text"
+                class="user-tag form-control"
+                placeholder="User's Tag"
+                aria-label="User's Tag"
+                aria-describedby="button-addon2"
+              />
+              <button
+                class="btn-copy btn btn-outline-primary"
+                type="button"
+                id="button-addon2"
+              >
+                Copy
+              </button>
+            </div>
+            <div class="input-group input-group-sm mb-1">
+              <input
+                type="text"
+                class="user-email form-control"
+                placeholder="User's email"
+                aria-label="User's email"
+                aria-describedby="button-addon2"
+              />
+              <button
+                class="btn-copy btn btn-outline-primary"
+                type="button"
+                id="button-addon2"
+              >
+                Copy
+              </button>
+            </div>
+
+            <div class="input-group input-group-sm mb-1">
+              <input
+                type="text"
+                class="user-contact form-control"
+                placeholder="User's Contact"
+                aria-label="User's Contact"
+                aria-describedby="button-addon2"
+              />
+              <button
+                class="btn-copy btn btn-outline-primary"
+                type="button"
+                id="button-addon2"
+              >
+                Copy
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-container container-fluid border-top rounded p-1">
+        <div class="container-fluid d-flex justify-content-end">
+          <!-- <button class="btn btn-outline-primary m-1">Select</button> -->
+          <button class="btn btn-outline-primary m-1">Copy</button>
+          <button class="btn btn-primary m-1">Download</button>
+        </div>
+      </div>
+    </div>
+    <script src="./assets/libs/bootstrap.min.js"></script>
+    <script src="./assets/libs/FileSaver.min.js"></script>
     <script src="./popup.js"></script>
-</body>
+  </body>
 </html>

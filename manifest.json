@@ -8,22 +8,22 @@
     },
     "action": {
         "default_icon": {                    
-            "16": "./assets/images/icon16.png",           
-            "24": "./assets/images/icon24.png",           
-            "32": "./assets/images/icon32.png",
-            "48": "./assets/images/icon48.png"           
+            "16": "/assets/images/logo16.png",           
+            "24": "/assets/images/logo24.png",           
+            "32": "/assets/images/logo32.png",
+            "48": "/assets/images/logo48.png"           
           },
           "default_title": "Facebook Data Extractor",      
           "default_popup": "popup.html"
     },
     "content_scripts": [
       {
-        "matches": ["<all_urls>"],
+        "matches": ["*://*.facebook.com/*"],
         "css":["/assets/css/bootstrap.min.css"],
         "run_at": "document_idle",
         "js": [
-          "./assets/js/contentScripts/pageObserver.js"
-        
+          "/assets/js/contentScripts/pageObserver.js",
+          "/assets/js/contentScripts/popupContainer.js"
         ]
       }
     ],
@@ -36,15 +36,15 @@
       ],
       "host_permissions": [],
       "icons": {                    
-        "16": "./assets/images/icon16.png",           
-        "24": "./assets/images/icon24.png",           
-        "32": "./assets/images/icon32.png",
-        "48": "./assets/images/icon48.png"           
+        "16": "/assets/images/logo16.png",           
+        "24": "/assets/images/logo24.png",           
+        "32": "/assets/images/logo32.png",
+        "48": "/assets/images/logo48.png"           
       },
       
       "web_accessible_resources": [
         {
-          "resources": [],
+          "resources": ["/assets/images/logo.png", "popup.html"],
           "matches": ["<all_urls>"]
         }]
     }

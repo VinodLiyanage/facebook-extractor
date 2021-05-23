@@ -101,5 +101,6 @@ chrome.runtime.onMessage.addListener(
 
     const profileInfoArray = await fetchProfile(profileTagArray);
     await saveInfo(profileInfoArray)
+    
   }
 );
