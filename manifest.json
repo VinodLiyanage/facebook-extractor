@@ -22,16 +22,12 @@
         "css":["/assets/css/bootstrap.min.css"],
         "run_at": "document_idle",
         "js": [
-          "/assets/js/contentScripts/pageObserverLocal.js",
-          "/assets/js/contentScripts/popupContainer.js"
+          "/assets/js/contentScripts/pageObserverLocal.js"
         ]
       }
     ],
     
       "permissions": [
-        "tabs",
-        "activeTab",
-        "scripting",
         "storage"
       ],
       "host_permissions": [],

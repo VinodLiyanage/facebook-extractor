@@ -1,8 +1,5 @@
 class WinowManager {
   constructor() {
-    console.log("window manager");
-  }
-  init() {
     this.removeCard();
     this.updateWindow();
     this.editWindow();
@@ -20,16 +17,16 @@ class WinowManager {
   }
   addCard({ email, contact }) {
     if (!email?.length && !contact?.length) return;
-    console.log(email, contact);
+
     const emailTab = document.querySelector(".email-tab");
     const contactTab = document.querySelector(".contact-tab");
 
-    /**
+    /*
      * <button type="button" class="list-group-item list-group-item-action" aria-current="true">
-              The current button
-            </button>
+     *        The current button
+     *  </button>
      */
-    console.log("add card", email, contact);
+
     if (email?.length) {
       for (let em of email) {
         const btn = document.createElement("button");
@@ -151,5 +148,4 @@ class WinowManager {
   }
 }
 
-const windowManager = new WinowManager();
-windowManager.init()
+new WinowManager();

@@ -1,7 +1,10 @@
 function connectBackground(data) {
-  console.log("background Called!");
+  /**
+   * @param {string} data - document.body.innerText string.
+   */
+  if(!data && !data.length) return;
   try {
-    chrome.runtime.sendMessage({ data }, (response) => {});
+    chrome.runtime.sendMessage({ data }, () => {});
   } catch (e) {
     console.error(e);
   }
@@ -12,13 +15,14 @@ class PageObserver {
     this.targetNode = targetNode;
     this.config = { attributes: false, childList: true, subtree: true };
     this.observer = new MutationObserver((m, o) => this.callback(m, o));
-    console.log("im page Observer");
     this.observe();
   }
-
+ 
+  //this method will remove the MutationObserver from the DOM.
   setDesabled() {
     this.observer.disconnect();
   }
+
   observe() {
     this.observer.observe(this.targetNode, this.config);
   }
@@ -29,6 +33,8 @@ class PageObserver {
         for (let node of mutation.addedNodes) {
           if (node && node.nodeType === Node.ELEMENT_NODE) {
                 const bodyText = document.body.innerText;
+
+                //sending innertext data to background js.
                 connectBackground(bodyText);
           }
         }
@@ -38,11 +44,13 @@ class PageObserver {
 }
 
 (() => {
-  console.log("content script loaded!");
   const targetNode = document.body;
   //!
   chrome.storage.local.clear();
   //!
-  console.log("targetNode", targetNode);
+  if(!targetNode) {
+    console.error('document body is unvailable!')
+    return;
+  }
   new PageObserver(targetNode);
 })();
