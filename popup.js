@@ -1,6 +1,6 @@
 class WinowManager {
   constructor() {
-    console.log("window manager window manager window manager");
+    console.log("window manager");
   }
   init() {
     this.removeCard();
@@ -152,3 +152,4 @@ class WinowManager {
 }
 
 const windowManager = new WinowManager();
+windowManager.init()
