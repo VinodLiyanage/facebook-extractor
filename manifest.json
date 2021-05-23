@@ -29,15 +29,12 @@
     ],
     
       "permissions": [
-        "https://mbasic.facebook.com/",
-        "https://www.facebook.com/",
-        "identity",
         "tabs",
         "activeTab",
         "scripting",
         "storage"
       ],
-      "host_permissions": ["https://mbasic.facebook.com/", "https://www.facebook.com/"],
+      "host_permissions": [],
       "icons": {                    
         "16": "./assets/images/icon16.png",           
         "24": "./assets/images/icon24.png",           

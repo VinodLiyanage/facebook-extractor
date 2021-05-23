@@ -97,6 +97,7 @@ async function saveInfo(profileInfoArray) {
 chrome.runtime.onMessage.addListener(
   async ({ profileTagArray }, sender, sendResponse) => {
       if(!profileTagArray) return;
+      console.log('profileTagArray', profileTagArray)
 
     const profileInfoArray = await fetchProfile(profileTagArray);
     await saveInfo(profileInfoArray)
