@@ -44,6 +44,7 @@ class PageObserver {
 }
 
 (() => {
+  console.log('pageObserverLocal started!')
   const targetNode = document.body;
   //!
   chrome.storage.local.clear();

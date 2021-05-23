@@ -119,9 +119,7 @@ class PageObserver {
   
   async callback(mutationsList, observer) {
     for (const mutation of mutationsList) {
-      // console.log("mutation", mutation);
       if (mutation.type === "childList" && mutation.addedNodes.length) {
-        // console.log("page mutation occured!");
         const bodyText = document.body.innerText
         connectBackground(bodyText, false)
         for (let node of mutation.addedNodes) {

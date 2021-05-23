@@ -94,3 +94,5 @@ chrome.runtime.onMessage.addListener(async ({ data }, sender, sendResponse) => {
   const contactArray = getContactNumberLocal(data);
   saveInfo(emailArray, contactArray);
 });
+
+
