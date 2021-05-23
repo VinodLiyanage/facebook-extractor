@@ -10,8 +10,9 @@
   </head>
   <body>
     <div class="main-container border">
+      
       <div class="navbar-container mb-2">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <div class="container-fluid">
             <a
               class="navbar-brand"
@@ -89,17 +90,30 @@
         class="
           item-container
           container-fluid
-          d-flex
-          flex-column
-          align-items-start
-          border
-          rounded
           mb-2
           p-2
         "
-        style="height: 400px; overflow-y: scroll;"
         data-simplebar
       >
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Emails</button>
+          <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Contacts</button>
+        </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent" style="height: 400px; overflow-y: scroll;">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+          <div class="email-tab list-group">
+            
+          </div>
+        </div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+          <div class="contact-tab list-group">
+          
+            
+          </div>
+        </div>
+      </div>
         <div
           class="
             user-info-card-main
@@ -112,7 +126,7 @@
           style="width: 100%; display: none"
         >
           <div class="card-body p-1">
-            <div class="input-group input-group-sm mb-1">
+            <!-- <div class="input-group input-group-sm mb-1">
               <input
                 type="text"
                 class="user-tag form-control"
@@ -143,7 +157,7 @@
               >
                 Copy
               </button>
-            </div>
+            </div> -->
 
             <div class="input-group input-group-sm mb-1">
               <input
@@ -166,9 +180,9 @@
       </div>
       <div class="footer-container container-fluid border-top rounded p-1">
         <div class="container-fluid d-flex justify-content-end">
-          <!-- <button class="btn btn-outline-primary m-1">Select</button> -->
-          <button class="btn btn-outline-primary m-1">Copy</button>
-          <button class="btn btn-primary m-1">Download</button>
+          <button class="btn btn-sm btn-outline-danger m-1" disabled>Deep Search</button>
+          <button id="copy-btn" class="btn btn-sm btn-outline-primary m-1">Copy</button>
+          <button id="download-btn" class="btn btn-sm btn-primary m-1">Download</button>
         </div>
       </div>
     </div>

@@ -1,11 +1,20 @@
+function connectBackground(data, isFetch=false) {
+  console.log("background Called!");
+  try {
+    chrome.runtime.sendMessage({ data, isFetch }, (response) => {});
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 class Scrapper {
   constructor(urlArray) {
     this.urlArray = urlArray;
     this.profileDataArray = [];
     this.tagsArray = [];
   }
-
-  async filterProfileTag() {
+  
+  async getUserInfoByFetch() {
     /**
      * ? this method filder out non user profile urls.
      * @returns {string[]} filteredUserUrl
@@ -67,7 +76,7 @@ class Scrapper {
           });
         });
         console.log("profileTagArray", profileTagArray);
-        this.getProfileData(profileTagArray);
+        connectBackground(profileTagArray, true);
       } else {
         console.log("prevTagObject found!");
         const cleanedTagsArray = [];
@@ -85,18 +94,10 @@ class Scrapper {
         }
         console.log("cleanTags", cleanedTagsArray);
         if (cleanedTagsArray.length) {
-          this.getProfileData(cleanedTagsArray);
+          connectBackground(cleanedTagsArray, true);
         }
       }
     });
-  }
-  getProfileData(profileTagArray) {
-    console.log("background Called!");
-    try {
-      chrome.runtime.sendMessage({ profileTagArray }, (response) => {});
-    } catch (e) {
-      console.error(e);
-    }
   }
 }
 
@@ -115,19 +116,21 @@ class PageObserver {
   observe() {
     this.observer.observe(this.targetNode, this.config);
   }
-
+  
   async callback(mutationsList, observer) {
     for (const mutation of mutationsList) {
       // console.log("mutation", mutation);
       if (mutation.type === "childList" && mutation.addedNodes.length) {
         // console.log("page mutation occured!");
+        const bodyText = document.body.innerText
+        connectBackground(bodyText, false)
         for (let node of mutation.addedNodes) {
           if(node && node.nodeType === Node.ELEMENT_NODE) {
             const anchor = Array.from(new Set(node.querySelectorAll("a[href]")));
             // console.log("anchors", anchor.length);
             const scapper = new Scrapper(anchor);
             if (anchor.length) {
-              await scapper.filterProfileTag();
+              await scapper.getUserInfoByFetch();
             }
           }
         }

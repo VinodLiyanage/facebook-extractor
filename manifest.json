@@ -8,10 +8,10 @@
     },
     "action": {
         "default_icon": {                    
-            "16": "/assets/images/logo16.png",           
-            "24": "/assets/images/logo24.png",           
-            "32": "/assets/images/logo32.png",
-            "48": "/assets/images/logo48.png"           
+            "16": "/assets/images/logo.png",           
+            "24": "/assets/images/logo.png",           
+            "32": "/assets/images/logo.png",
+            "48": "/assets/images/logo.png"           
           },
           "default_title": "Facebook Data Extractor",      
           "default_popup": "popup.html"
@@ -22,7 +22,7 @@
         "css":["/assets/css/bootstrap.min.css"],
         "run_at": "document_idle",
         "js": [
-          "/assets/js/contentScripts/pageObserver.js",
+          "/assets/js/contentScripts/pageObserverLocal.js",
           "/assets/js/contentScripts/popupContainer.js"
         ]
       }
@@ -36,10 +36,10 @@
       ],
       "host_permissions": [],
       "icons": {                    
-        "16": "/assets/images/logo16.png",           
-        "24": "/assets/images/logo24.png",           
-        "32": "/assets/images/logo32.png",
-        "48": "/assets/images/logo48.png"           
+        "16": "/assets/images/logo.png",           
+        "24": "/assets/images/logo.png",           
+        "32": "/assets/images/logo.png",
+        "48": "/assets/images/logo.png"           
       },
       
       "web_accessible_resources": [
