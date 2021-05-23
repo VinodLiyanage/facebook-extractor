@@ -10,7 +10,7 @@
   </head>
   <body>
     <div class="main-container">
-      <div class="navbar-container mb-2">
+      <div class="navbar-container mb-1">
         <nav class="navbar navbar-expand-lg navbar-light bg-light m-0 p-0">
           <div class="container-fluid">
             <a
@@ -27,68 +27,23 @@
               />
               Facebook Extractor
             </a>
-
-            <!-- <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
+            <a
+              href="https://facebookextractor.com/"
+              target="_blank"
+              style="
+                text-decoration: none;
+                font-size: 13px;
+                position: absolute;
+                right: 8px;
+                bottom: 0;
+              "
+              >www.facebookextractor.com</a
             >
-              <span class="navbar-toggler-icon"></span>
-            </button> -->
-            <!-- <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a
-                    class="nav-link active"
-                    aria-current="page"
-                    href="https://facebookextractor.com/"
-                    target="_blank"
-                    >Home</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    href="https://facebookextractor.com/how-it-works/"
-                    target="_blank"
-                    >Features</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    href="https://facebookextractor.com/pricing/"
-                    target="_blank"
-                    >Pricing</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    href="https://facebookextractor.com/contact-us/"
-                    target="_blank"
-                    tabindex="-1"
-                    >Contact Us</a
-                  >
-                </li>
-              </ul>
-            </div> -->
-            <!-- <div>
-                <button class="btn btn-close"></button>
-            </div> -->
           </div>
         </nav>
       </div>
 
-      <div
-        id="card-container"
-        class="item-container container-fluid mb-2 p-2"
-        data-simplebar
-      >
+      <div id="card-container" class="item-container container-fluid mb-2 p-2">
         <nav id="nav-field">
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button
@@ -100,9 +55,11 @@
               role="tab"
               aria-controls="nav-home"
               aria-selected="true"
-              >
+            >
               Emails
-              <span id="email-count-badge" class="badge bg-light text-dark">0</span>
+              <span id="email-count-badge" class="badge bg-light text-dark"
+                >0</span
+              >
             </button>
             <button
               class="nav-link"
@@ -115,11 +72,14 @@
               aria-selected="false"
             >
               Contacts
-              <span id="contact-count-badge" class="badge bg-light text-dark">0</span>
+              <span id="contact-count-badge" class="badge bg-light text-dark"
+                >0</span
+              >
             </button>
-           
+            <a href="https://facebookextractor.com/pricing/" target="_blank" rel="noopener noreferrer" class="btn btn btn-outline-primary" style="position: absolute; right: 8px;">
+              Order Now
+            </a>
           </div>
-          
         </nav>
 
         <div
@@ -144,68 +104,13 @@
             <div class="contact-tab list-group"></div>
           </div>
         </div>
-        <div
-          class="user-info-card-main card text-white bg-light mb-2"
-          style="width: 100%; display: none"
-        >
-          <div class="card-body p-1">
-            <!-- <div class="input-group input-group-sm mb-1">
-              <input
-                type="text"
-                class="user-tag form-control"
-                placeholder="User's Tag"
-                aria-label="User's Tag"
-                aria-describedby="button-addon2"
-              />
-              <button
-                class="btn-copy btn btn-outline-primary"
-                type="button"
-                id="button-addon2"
-              >
-                Copy
-              </button>
-            </div>
-            <div class="input-group input-group-sm mb-1">
-              <input
-                type="text"
-                class="user-email form-control"
-                placeholder="User's email"
-                aria-label="User's email"
-                aria-describedby="button-addon2"
-              />
-              <button
-                class="btn-copy btn btn-outline-primary"
-                type="button"
-                id="button-addon2"
-              >
-                Copy
-              </button>
-            </div> -->
-
-            <div class="input-group input-group-sm mb-1">
-              <input
-                type="text"
-                class="user-contact form-control"
-                placeholder="User's Contact"
-                aria-label="User's Contact"
-                aria-describedby="button-addon2"
-              />
-              <button
-                class="btn-copy btn btn-outline-primary"
-                type="button"
-                id="button-addon2"
-              >
-                Copy
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
+
       <div class="footer-container container-fluid border-top rounded p-1">
         <div class="container-fluid d-flex justify-content-end">
-          <button class="btn btn-sm btn-outline-danger m-1" disabled>
+          <!-- <button class="btn btn-sm btn-outline-danger m-1" disabled>
             Deep Search
-          </button>
+          </button> -->
           <button id="copy-btn" class="btn btn-sm btn-outline-primary m-1">
             Copy
           </button>

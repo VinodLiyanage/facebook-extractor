@@ -6,7 +6,7 @@ function connectBackground(data) {
   try {
     chrome.runtime.sendMessage({ data }, (res) => {});
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 }
 
@@ -44,7 +44,6 @@ class PageObserver {
 }
 
 (() => {
-  console.log('pageObserverLocal started!')
   const targetNode = document.body;
   //!
   chrome.storage.local.clear();

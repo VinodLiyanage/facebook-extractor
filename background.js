@@ -89,7 +89,9 @@ async function saveInfo(emailArray, contactArray) {
 }
 
 chrome.runtime.onMessage.addListener(async ({ data }, sender, sendResponse) => {
+  //?this will remove the chrome.runtime.lasterror
   sendResponse({ status: true });
+  
   await clearStorage();
   const emailArray = getEmailLocal(data);
   const contactArray = getContactNumberLocal(data);

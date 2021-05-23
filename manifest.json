@@ -1,7 +1,7 @@
 {
     "name": "Facebook Extractor",
     "version": "1.0.0",
-    "description": "This is a great tool for extracting user email and number from their facebook account.",
+    "description": "A Powerful Extraction Tool for extract emails and contact numbers from the Facebook.",
     "manifest_version": 3,
     "background": {
       "service_worker": "background.js"
@@ -19,7 +19,6 @@
     "content_scripts": [
       {
         "matches": ["*://*.facebook.com/*"],
-        "css":["/assets/css/bootstrap.min.css"],
         "run_at": "document_idle",
         "js": [
           "/assets/js/contentScripts/pageObserverLocal.js"
