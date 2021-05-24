@@ -4,7 +4,7 @@ function getEmailLocal(htmlContent) {
    * @returns {string[]} - returning an Array of valid emails.
    */
 
-  if (!htmlContent && !htmlContent.length) return;
+  if (!(htmlContent && htmlContent.length)) return;
   if (!(typeof htmlContent === "string" || htmlContent instanceof String)) {
     console.error("htmlContent is not a string!");
     return;
@@ -26,7 +26,7 @@ function getContactNumberLocal(htmlContent) {
    * @returns {string[]} - returning an Array of valid Contact Numbers.
    */
 
-  if (!htmlContent && !htmlContent.length) return;
+  if (!(htmlContent && htmlContent.length)) return;
   if (!(typeof htmlContent === "string" || htmlContent instanceof String)) {
     console.error("htmlContent is not a string!");
     return;
@@ -34,17 +34,34 @@ function getContactNumberLocal(htmlContent) {
 
   //phone number validator regex.
   const re =
-    /(?:(?:Call ([\d\.\s]{1,15}))|(?:((\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4})))/gim;
+    /((?:((\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}))|(?:\+?(\d{1,3}))[-. (](\d{3,4})[-. (](\d{3,4}))/gim;
 
-  return Array.from(new Set(htmlContent.match(re) || [])) || [];
+  //new regex
+  // const re = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/gmi;
+  // const re = /\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?/gmi;
+  // const re =
+  //   /((?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?)|(?:\+?(\d{1,3}))?[-. (](\d{3,4})[-. (](\d{3,4})/gm;
+
+  return (
+    Array.from(
+      new Set(
+        (htmlContent.match(re) || []).filter((m) => {
+          if (!m) return;
+          return m.length >= 10 && m.length <= 12;
+        })
+      )
+    ) || []
+  );
 }
 
 async function setBadgeCount(count) {
-  await chrome.action.setBadgeText({ text: (count || 0).toString() });
-}
-
-async function clearStorage() {
-  chrome.storage.local.remove(["email", "contact"]);
+  let text;
+  try {
+    text = (count || 0).toString()
+  } catch {
+    text = '0'
+  }
+  await chrome.action.setBadgeText({ text });
 }
 
 async function saveInfo(emailArray, contactArray) {
@@ -54,8 +71,8 @@ async function saveInfo(emailArray, contactArray) {
    */
 
   if (
-    !(emailArray || emailArray.length) &&
-    !(contactArray || contactArray.length)
+    !(emailArray && emailArray.length) &&
+    !(contactArray && contactArray.length)
   ) {
     console.error("emailArray and Contact Array have zero length!");
     return;
@@ -72,16 +89,17 @@ async function saveInfo(emailArray, contactArray) {
     if (!email) {
       newEmailArray = emailArray;
     } else {
-      newEmailArray = [...email, ...emailArray];
+      newEmailArray = Array.from(new Set([...email, ...emailArray]));
     }
     if (!contact) {
       newContactArray = contactArray;
     } else {
-      newContactArray = [...contact, ...contactArray];
+      newContactArray = Array.from(new Set([...contact, ...contactArray]));
     }
     const newUserObject = { email: newEmailArray, contact: newContactArray };
 
-    setBadgeCount(Object.values(newUserObject).flat().length);
+    const count = (Object.values(newUserObject || {}) || []).flat().length
+    setBadgeCount(count);
     chrome.storage.local.set(newUserObject, () => {
       console.log("email and contact saved succefully!");
     });
@@ -91,10 +109,9 @@ async function saveInfo(emailArray, contactArray) {
 chrome.runtime.onMessage.addListener(async ({ data }, sender, sendResponse) => {
   //?this will remove the chrome.runtime.lasterror
   sendResponse({ status: true });
-  
-  await clearStorage();
+
   const emailArray = getEmailLocal(data);
   const contactArray = getContactNumberLocal(data);
   await saveInfo(emailArray, contactArray);
-  return true; 
+  return true;
 });

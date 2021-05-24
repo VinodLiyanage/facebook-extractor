@@ -8,6 +8,12 @@ class WinowManager {
     return new Promise((resolve, reject) => {
       try {
         chrome.storage.local.get(["email", "contact"], ({ email, contact }) => {
+          if (!(email && email.length)) {
+            email = [];
+          }
+          if (!(contact && contact.length)) {
+            contact = [];
+          }
           resolve({ email, contact });
         });
       } catch (e) {
@@ -16,14 +22,16 @@ class WinowManager {
     });
   }
   addCard({ email, contact }) {
-    if (!email?.length && !contact?.length) return;
+    if (!(email && email.length) && !(contact && contact.length)) return;
 
     const emailTab = document.querySelector(".email-tab");
     const contactTab = document.querySelector(".contact-tab");
 
-    if (email && email?.length) {
+    if(!emailTab || !contactTab) return;
+
+    if (email && email.length) {
       for (let em of email) {
-        if(!em && !em.length) continue;
+        if (!(em && em.length)) continue;
         const btn = document.createElement("button");
         btn.setAttribute("type", "button");
         btn.classList.add(
@@ -32,14 +40,14 @@ class WinowManager {
           "list-group-item-action"
         );
         btn.setAttribute("aria-current", "true");
-        btn.setAttribute("data-val", em);
+        btn.setAttribute("data-val", em || "");
         btn.innerText = em || "";
         emailTab.appendChild(btn);
       }
     }
-    if (contact && contact?.length) {
+    if (contact && contact.length) {
       for (let ct of contact) {
-        if(!ct && !ct.length) continue;
+        if (!(ct && ct.length)) continue;
         const btn = document.createElement("button");
         btn.setAttribute("type", "button");
         btn.classList.add(
@@ -48,7 +56,7 @@ class WinowManager {
           "list-group-item-action"
         );
         btn.setAttribute("aria-current", "true");
-        btn.setAttribute("data-val", ct);
+        btn.setAttribute("data-val", ct || "");
 
         btn.innerText = ct || "";
         contactTab.appendChild(btn);
@@ -56,58 +64,58 @@ class WinowManager {
     }
   }
   updateBadge({ email, contact }) {
-    if (!email?.length && !contact?.length) return;
+    if (!(email && email.length) && !(contact && contact.length)) return;
 
-    const emailCountBadge = document.getElementById('email-count-badge')
-    const contactCountBadge = document.getElementById('contact-count-badge')
+    const emailCountBadge = document.getElementById("email-count-badge");
+    const contactCountBadge = document.getElementById("contact-count-badge");
 
-    if(email?.length) {
-      emailCountBadge.innerText = (email?.length || 0).toString();
+    if(!emailCountBadge || !contactCountBadge) return;
+
+    if (email && email.length) {
+      emailCountBadge.innerText = (email.length || 0).toString();
     }
-    if(contact?.length) {
-      contactCountBadge.innerText = (contact?.length || 0).toString();
+    if (contact && contact.length) {
+      contactCountBadge.innerText = (contact.length || 0).toString();
     }
   }
   removeCard() {
     const emailTab = document.querySelector(".email-tab");
     const contactTab = document.querySelector(".contact-tab");
+
+    if(!emailTab || !contactTab) return;
+
     try {
       emailTab.querySelectorAll("*").forEach((el) => el.remove());
       contactTab.querySelectorAll("*").forEach((el) => el.remove());
-    } catch(e) {
-      console.error(e)
+    } catch {
+      null;
     }
   }
   async updateWindow() {
     const { email, contact } = await this.getValues();
-    if (
-      !(email || email.length) &&
-      !(contact || contact.length)
-    ) {
+    if (!(email && email.length) && !(contact && contact.length)) {
       console.error("email and Contact Array have zero length!");
       return;
     }
-    if(!Array.isArray(email)) {
+    if (!Array.isArray(email)) {
       email = [];
     }
-    if(!Array.isArray(contact)) {
+    if (!Array.isArray(contact)) {
       contact = [];
     }
 
     this.addCard({ email, contact });
-    this.updateBadge({email, contact})
+    this.updateBadge({ email, contact });
   }
   downloader(text) {
-    console.log("dtext", text);
-    if (!text?.length) return;
+    if (!(text && text.length)) return;
     saveAs(
       new Blob([text]),
       `facebook-user-data-${new Date().toDateString()}.txt`
     );
   }
   copyContent(text) {
-    console.log("ctext", text);
-    if (!text?.length) return;
+    if (!(text && text.length)) return;
 
     function fallbackCopyTextToClipboard(text) {
       const textArea = document.createElement("textarea");
@@ -139,15 +147,15 @@ class WinowManager {
       navigator.clipboard.writeText(text).then(
         function () {
           //?
-          const parent = document.getElementById('nav-field')
-          const alert = document.createElement('div')
-          alert.classList.add('alert', 'alert-success')
-          alert.setAttribute('role',"alert")
-          alert.innerText = 'Copied!'
-          parent.appendChild(alert)
+          const parent = document.getElementById("nav-field");
+          const alert = document.createElement("div");
+          alert.classList.add("alert", "alert-success");
+          alert.setAttribute("role", "alert");
+          alert.innerText = "Copied!";
+          parent.appendChild(alert);
           setTimeout(() => {
-            parent.removeChild(alert)
-          },1500)
+            parent.removeChild(alert);
+          }, 1500);
           //?
           console.log("Async: Copying to clipboard was successful!");
         },
@@ -160,39 +168,45 @@ class WinowManager {
   }
   async editWindow() {
     const { email, contact } = await this.getValues();
-    if (
-      !(email || email.length) &&
-      !(contact || contact.length)
-    ) {
+    if (!(email && email.length) && !(contact && contact.length)) {
       console.error("email and Contact Array have zero length!");
       return;
     }
-    if(!Array.isArray(email)) {
+    if (!Array.isArray(email)) {
       email = [];
     }
-    if(!Array.isArray(contact)) {
+    if (!Array.isArray(contact)) {
       contact = [];
     }
 
     let text = "";
-    if (email?.length) {
+    if (email && email.length) {
       text += email.join("\n");
     }
-    if (contact?.length) {
+    if (contact && contact.length) {
       text += contact.join("\n");
     }
     const handleListBtn = (e) => {
-      const text = e?.target?.dataset?.val || "";
-      if(text?.length) {
+      let text;
+      try {
+        text = e.target.dataset.val || "";
+      } catch {
+        text = "";
+      }
+      if (!(text && text.length)) {
         this.copyContent(text);
       } else {
-        console.error('cannot copy the content. An Error Occured!')
+        console.error("cannot copy the content. An Error Occured!");
       }
       return;
     };
-    const listCopyBtn = Array.from(document.querySelectorAll(".info-btn"));
+    const listCopyBtn = Array.from(document.querySelectorAll(".info-btn") || []);
     const copyBtn = document.getElementById("copy-btn");
     const downloadbtn = document.getElementById("download-btn");
+
+    if(!copyBtn || !downloadbtn) return;
+
+    if(!(listCopyBtn && listCopyBtn.length)) return;
 
     for (let btn of listCopyBtn) {
       if (btn && btn.nodeType === Node.ELEMENT_NODE) {
