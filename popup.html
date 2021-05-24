@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Facebook Extractor</title>
+    <link rel="stylesheet" href="./assets/css/simplebar.css" />
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="./assets/css/popup.css" />
   </head>
@@ -76,24 +77,31 @@
                 >0</span
               >
             </button>
-            <a href="https://facebookextractor.com/" target="_blank" rel="noopener noreferrer" class="btn btn btn-outline-primary" style="position: absolute; right: 8px;">
+            <a
+              href="https://facebookextractor.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn btn-outline-primary"
+              style="position: absolute; right: 8px"
+            >
               Order Now
             </a>
           </div>
         </nav>
 
-        <div
-          class="tab-content"
-          id="nav-tabContent"
-          style="height: 400px; overflow-y: scroll"
-        >
+        <div class="tab-content" id="nav-tabContent" style="height: 400px">
           <div
             class="tab-pane fade show active"
             id="nav-home"
             role="tabpanel"
             aria-labelledby="nav-home-tab"
           >
-            <div class="email-tab list-group"></div>
+            <div
+              class="email-tab list-group"
+              data-simplebar
+              style="height: 400px;"
+            >
+             </div>
           </div>
           <div
             class="tab-pane fade"
@@ -101,9 +109,13 @@
             role="tabpanel"
             aria-labelledby="nav-profile-tab"
           >
-            <div class="contact-tab list-group"></div>
+            <div
+              class="contact-tab list-group"
+              data-simplebar
+              style="height: 400px"
+            ></div>
           </div>
-        </div>
+        </div> 
       </div>
 
       <div class="footer-container container-fluid border-top rounded p-1">
@@ -117,6 +129,7 @@
         </div>
       </div>
     </div>
+    <script src="./assets/libs/simplebar.min.js"></script>
     <script src="./assets/libs/bootstrap.min.js"></script>
     <script src="./assets/libs/FileSaver.min.js"></script>
     <script src="./popup.js"></script>

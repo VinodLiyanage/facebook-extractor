@@ -5,7 +5,7 @@ function connectBackground(data) {
   if(!(data && data.length)) return;
   try {
     chrome.runtime.sendMessage({ data }, (res) => {});
-  } catch {
+  } catch (e){
     null;
   }
 }
@@ -40,7 +40,7 @@ class PageObserver {
 async function clearStorage() {
   try {
     chrome.storage.local.remove(["email", "contact"]);
-  } catch {
+  } catch (e){
     chrome.storage.local.clear()
   }
 }

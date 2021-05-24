@@ -42,24 +42,17 @@ function getContactNumberLocal(htmlContent) {
   // const re =
   //   /((?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?)|(?:\+?(\d{1,3}))?[-. (](\d{3,4})[-. (](\d{3,4})/gm;
 
-  return (
-    Array.from(
-      new Set(
-        (htmlContent.match(re) || []).filter((m) => {
-          if (!m) return;
-          return m.length >= 10 && m.length <= 12;
-        })
-      )
-    ) || []
-  );
+  return Array.from(new Set((htmlContent.match(re) || []).map(num => {
+     return num.replace(/\D/gmi, '')
+  }))) || [];
 }
 
 async function setBadgeCount(count) {
   let text;
   try {
-    text = (count || 0).toString()
-  } catch {
-    text = '0'
+    text = (count || 0).toString();
+  } catch (e) {
+    text = "0";
   }
   await chrome.action.setBadgeText({ text });
 }
@@ -74,7 +67,6 @@ async function saveInfo(emailArray, contactArray) {
     !(emailArray && emailArray.length) &&
     !(contactArray && contactArray.length)
   ) {
-    console.error("emailArray and Contact Array have zero length!");
     return;
   }
   if (!Array.isArray(emailArray)) {
@@ -98,7 +90,7 @@ async function saveInfo(emailArray, contactArray) {
     }
     const newUserObject = { email: newEmailArray, contact: newContactArray };
 
-    const count = (Object.values(newUserObject || {}) || []).flat().length
+    const count = (Object.values(newUserObject || {}) || []).flat().length;
     setBadgeCount(count);
     chrome.storage.local.set(newUserObject, () => {
       console.log("email and contact saved succefully!");

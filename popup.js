@@ -24,8 +24,8 @@ class WinowManager {
   addCard({ email, contact }) {
     if (!(email && email.length) && !(contact && contact.length)) return;
 
-    const emailTab = document.querySelector(".email-tab");
-    const contactTab = document.querySelector(".contact-tab");
+    const emailTab = document.querySelector(".email-tab .simplebar-content");
+    const contactTab = document.querySelector(".contact-tab .simplebar-content");
 
     if (!emailTab || !contactTab) return;
 
