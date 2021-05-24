@@ -27,7 +27,7 @@ class WinowManager {
     const emailTab = document.querySelector(".email-tab");
     const contactTab = document.querySelector(".contact-tab");
 
-    if(!emailTab || !contactTab) return;
+    if (!emailTab || !contactTab) return;
 
     if (email && email.length) {
       for (let em of email) {
@@ -69,7 +69,7 @@ class WinowManager {
     const emailCountBadge = document.getElementById("email-count-badge");
     const contactCountBadge = document.getElementById("contact-count-badge");
 
-    if(!emailCountBadge || !contactCountBadge) return;
+    if (!emailCountBadge || !contactCountBadge) return;
 
     if (email && email.length) {
       emailCountBadge.innerText = (email.length || 0).toString();
@@ -82,11 +82,18 @@ class WinowManager {
     const emailTab = document.querySelector(".email-tab");
     const contactTab = document.querySelector(".contact-tab");
 
-    if(!emailTab || !contactTab) return;
+    const emailCountBadge = document.getElementById("email-count-badge");
+    const contactCountBadge = document.getElementById("contact-count-badge");
+
+    if (!emailCountBadge || !contactCountBadge) return;
+
+    if (!emailTab || !contactTab) return;
 
     try {
       emailTab.querySelectorAll("*").forEach((el) => el.remove());
       contactTab.querySelectorAll("*").forEach((el) => el.remove());
+      emailCountBadge.innerText = "0";
+      contactCountBadge.innerText = "0";
     } catch {
       null;
     }
@@ -113,6 +120,7 @@ class WinowManager {
       new Blob([text]),
       `facebook-user-data-${new Date().toDateString()}.txt`
     );
+    this.removeCard();
   }
   copyContent(text) {
     if (!(text && text.length)) return;
@@ -193,20 +201,22 @@ class WinowManager {
       } catch {
         text = "";
       }
-      if (!(text && text.length)) {
+      if (text && text.length) {
         this.copyContent(text);
       } else {
         console.error("cannot copy the content. An Error Occured!");
       }
       return;
     };
-    const listCopyBtn = Array.from(document.querySelectorAll(".info-btn") || []);
+    const listCopyBtn = Array.from(
+      document.querySelectorAll(".info-btn") || []
+    );
     const copyBtn = document.getElementById("copy-btn");
     const downloadbtn = document.getElementById("download-btn");
 
-    if(!copyBtn || !downloadbtn) return;
+    if (!copyBtn || !downloadbtn) return;
 
-    if(!(listCopyBtn && listCopyBtn.length)) return;
+    if (!(listCopyBtn && listCopyBtn.length)) return;
 
     for (let btn of listCopyBtn) {
       if (btn && btn.nodeType === Node.ELEMENT_NODE) {
