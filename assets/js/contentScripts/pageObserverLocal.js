@@ -2,10 +2,10 @@ function connectBackground(data) {
   /**
    * @param {string} data - document.body.innerText string.
    */
-  if(!(data && data.length)) return;
+  if (!(data && data.length)) return;
   try {
     chrome.runtime.sendMessage({ data }, (res) => {});
-  } catch (e){
+  } catch (e) {
     null;
   }
 }
@@ -27,9 +27,9 @@ class PageObserver {
       if (mutation.type === "childList" && mutation.addedNodes.length) {
         for (let node of mutation.addedNodes) {
           if (node && node.nodeType === Node.ELEMENT_NODE) {
-                const bodyText = document.body.innerText;
-                //sending innertext data to background js.
-                connectBackground(bodyText);
+            const bodyText = document.body.innerText;
+            //sending innertext data to background js.
+            connectBackground(bodyText);
           }
         }
       }
@@ -40,17 +40,16 @@ class PageObserver {
 async function clearStorage() {
   try {
     chrome.storage.local.remove(["email", "contact"]);
-  } catch (e){
-    chrome.storage.local.clear()
+  } catch (e) {
+    chrome.storage.local.clear();
   }
 }
 
 (() => {
   const targetNode = document.body;
-  if(!targetNode) {
-    console.error('document body is unvailable!')
+  if (!targetNode) {
     return;
   }
-  clearStorage()
+  clearStorage();
   new PageObserver(targetNode);
 })();

@@ -6,7 +6,6 @@ function getEmailLocal(htmlContent) {
 
   if (!(htmlContent && htmlContent.length)) return;
   if (!(typeof htmlContent === "string" || htmlContent instanceof String)) {
-    console.error("htmlContent is not a string!");
     return;
   }
 
@@ -28,7 +27,6 @@ function getContactNumberLocal(htmlContent) {
 
   if (!(htmlContent && htmlContent.length)) return;
   if (!(typeof htmlContent === "string" || htmlContent instanceof String)) {
-    console.error("htmlContent is not a string!");
     return;
   }
 

@@ -25,7 +25,9 @@ class WinowManager {
     if (!(email && email.length) && !(contact && contact.length)) return;
 
     const emailTab = document.querySelector(".email-tab .simplebar-content");
-    const contactTab = document.querySelector(".contact-tab .simplebar-content");
+    const contactTab = document.querySelector(
+      ".contact-tab .simplebar-content"
+    );
 
     if (!emailTab || !contactTab) return;
 
@@ -82,18 +84,11 @@ class WinowManager {
     const emailTab = document.querySelector(".email-tab");
     const contactTab = document.querySelector(".contact-tab");
 
-    const emailCountBadge = document.getElementById("email-count-badge");
-    const contactCountBadge = document.getElementById("contact-count-badge");
-
-    if (!emailCountBadge || !contactCountBadge) return;
-
     if (!emailTab || !contactTab) return;
 
     try {
       emailTab.querySelectorAll("*").forEach((el) => el.remove());
       contactTab.querySelectorAll("*").forEach((el) => el.remove());
-      emailCountBadge.innerText = "0";
-      contactCountBadge.innerText = "0";
     } catch {
       null;
     }
@@ -101,7 +96,6 @@ class WinowManager {
   async updateWindow() {
     const { email, contact } = await this.getValues();
     if (!(email && email.length) && !(contact && contact.length)) {
-      console.error("email and Contact Array have zero length!");
       return;
     }
     if (!Array.isArray(email)) {
@@ -120,7 +114,13 @@ class WinowManager {
       new Blob([text]),
       `facebook-user-data-${new Date().toDateString()}.txt`
     );
-    this.removeCard();
+    this.removeCard()
+    const emailCountBadge = document.getElementById("email-count-badge");
+    const contactCountBadge = document.getElementById("contact-count-badge");
+
+    if (!emailCountBadge || !contactCountBadge) return;
+    emailCountBadge.remove();
+    contactCountBadge.remove();
   }
   copyContent(text) {
     if (!(text && text.length)) return;
@@ -142,7 +142,7 @@ class WinowManager {
         var msg = successful ? "successful" : "unsuccessful";
         console.log("Fallback: Copying text command was " + msg);
       } catch (err) {
-        console.error("Fallback: Oops, unable to copy", err);
+        null;
       }
 
       document.body.removeChild(textArea);
@@ -168,7 +168,7 @@ class WinowManager {
           console.log("Async: Copying to clipboard was successful!");
         },
         function (err) {
-          console.error("Async: Could not copy text: ", err);
+          null;
         }
       );
     }
@@ -177,7 +177,6 @@ class WinowManager {
   async editWindow() {
     const { email, contact } = await this.getValues();
     if (!(email && email.length) && !(contact && contact.length)) {
-      console.error("email and Contact Array have zero length!");
       return;
     }
     if (!Array.isArray(email)) {
@@ -203,8 +202,6 @@ class WinowManager {
       }
       if (text && text.length) {
         this.copyContent(text);
-      } else {
-        console.error("cannot copy the content. An Error Occured!");
       }
       return;
     };

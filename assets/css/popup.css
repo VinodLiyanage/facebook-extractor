@@ -4,8 +4,22 @@ body {
 }
 .alert {
     position:fixed;
-    bottom: 0;
-    left: 0;
+    bottom: 6px;
+    left: 40%;
     margin: 0 !important;
     padding: .25em !important;
+}
+.tutorial {
+    position: absolute;
+    bottom:2px;
+    left:8px;
+    font-size: 13px;
+    text-decoration: none;
+}
+.website {
+    position: absolute;
+    bottom: 0;
+    right: 8px;
+    font-size: 13px;
+    text-decoration: none;
 }

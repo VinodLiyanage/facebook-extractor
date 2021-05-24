@@ -29,7 +29,6 @@
       "permissions": [
         "storage"
       ],
-      "host_permissions": [],
       "icons": {                    
         "16": "/assets/images/logo.png",           
         "24": "/assets/images/logo.png",           
